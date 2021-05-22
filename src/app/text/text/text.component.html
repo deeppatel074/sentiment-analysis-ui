@@ -1,4 +1,4 @@
-<div id="text" class="page-layout carded fullwidth inner-scroll">
+<div id="text" class="page-layout carded fullwidth ">
 
     <!-- TOP BACKGROUND -->
     <div class="top-bg accent"></div>
@@ -12,37 +12,56 @@
             fxLayoutAlign.gt-xs="space-between center">
 
             <!-- APP TITLE -->
-            <div class="logo mb-24 mb-sm-0" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="logo-icon s-32 mr-16">account_circle</mat-icon>
-                <span class="logo-text h1">Users</span>
+            <div class="logo mb-24 mb-sm-0" fxLayout="row" style="margin-top: 10px;" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16">reorder</mat-icon>
+                <span class="logo-text h1">Text Analysis</span>
             </div>
             <!-- / APP TITLE -->
         </div>
         <div class="content-card">
 
             <!-- CONTENT -->
-            <div class="mat-elevation-z8">
+
+
+
+            <form name="form" [formGroup]="form" class="product w-100-p" fxLayout="column" fxFlex>
+
+                <div class="tab-content p-24" fusePerfectScrollbar>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Enter Text To Check Sentiment</mat-label>
+                        <textarea matInput name="text" formControlName="text"></textarea>
+                        <mat-error *ngIf="form.get('text').hasError('required')">
+                            Text is required
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-raised-button [disabled]="form.invalid" color="accent" (click)='onAnalyse()'>Analyse
+                        Text</button>
+
+                </div>
+            </form>
+            <div class="content" *ngIf="isResult">
+                <table id="customers">
+                    <tr>
+                        <th>Text</th>
+                        <th>Polarity</th>
+                        <th>Sentiment</th>
+                    </tr>
+                    <tr>
+                        <td>{{text}}</td>
+                        <td>{{polarity}}</td>
+                        <td>{{sentiment}}</td>
+                    </tr>
+                </table>
 
             </div>
 
-            <!-- <div class="content">
-                <mat-selection-list #shoes [multiple]="false">
-                    <mat-list-option [routerLink]='"/results/"+shoe.surveyId+"/show"' *ngFor="let shoe of typesOfShoes"
-                        [value]="shoe">
-                        {{shoe.userId.name}}
-                    </mat-list-option>
-                </mat-selection-list>
-            </div> -->
+
             <!-- / CONTENT -->
 
         </div>
         <!-- / CONTENT CARD -->
-        <!-- <div style="position: absolute;right: 20px;bottom:20px;z-index: 2000;">
-            <button style="margin-right: 10px; background-color:#092330" mat-fab
-                [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}" [routerLink]="'/surveys/create'">
-                <mat-icon style="color: rgb(255, 255, 255)">add</mat-icon>
-            </button>
-        </div> -->
+
         <!-- / CENTER -->
 
     </div>
