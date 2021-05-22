@@ -1,0 +1,75 @@
+<div id="text" class="page-layout carded fullwidth ">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-sm-0" fxLayout="row" style="margin-top: 10px;" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16">cloud_upload</mat-icon>
+                <span class="logo-text h1">Upload CSV To Check Sentiment</span>
+            </div>
+            <!-- / APP TITLE -->
+        </div>
+        <div class="content-card" style="position: relative;" fusePerfectScrollbar>
+            <div class="tab-content p-24" fusePerfectScrollbar>
+                <mat-progress-bar *ngIf="loader" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+            </div>
+            <!-- CONTENT -->
+            <div class="content" *ngIf="isResult">
+                <div style="display: block;">
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                        [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                    </canvas>
+                </div>
+
+                <table id="customers">
+                    <tr>
+                        <th>Text</th>
+                        <th>Polarity</th>
+                        <th>Sentiment</th>
+                    </tr>
+                    <tr *ngFor="let el of results">
+                        <td>{{el.text}}</td>
+                        <td>{{el.polarity}}</td>
+                        <td>{{el.sentiment}}</td>
+                    </tr>
+                </table>
+
+            </div>
+
+
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+        <!-- / CENTER -->
+
+    </div>
+
+    <!-- TOP BACKGROUND -->
+    <!--  -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <!-- <div class="center">-->
+    <div style="position: fixed;right: 20px;bottom:20px;z-index: 2000;">
+        <button (click)="usersFileUpload.click()" style="margin-right: 10px; background-color:#039be5" mat-fab>
+            <mat-icon style="color: rgb(255, 255, 255)">cloud_upload</mat-icon>
+        </button>
+        <button *ngIf="isResult" style="margin-right: 10px; background-color:#092330" mat-fab
+            [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}" (click)="downloadCSV()">
+            <mat-icon style="color: rgb(255, 255, 255)">get_app</mat-icon>
+        </button>
+    </div>
+    <input style="width:0px;visibility: hidden" hidden #usersFileUpload type="file" (change)="onUsersUpload($event)"
+        placeholder="Upload file" accept=".xls,.xlsx,.csv">
+</div>

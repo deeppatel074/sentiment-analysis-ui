@@ -28,6 +28,12 @@ const appRoutes: Routes = [
     }, {
         path: 'text',
         loadChildren: () => import('./text/text.module').then(m => m.TextModule)
+    }, {
+        path: 'twitter',
+        loadChildren: () => import('./twitter/twitter.module').then(m => m.TwitterModule)
+    }, {
+        path: 'csv',
+        loadChildren: () => import('./csv/csv.module').then(m => m.CsvModule)
     },
 ];
 

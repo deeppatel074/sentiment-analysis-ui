@@ -1,0 +1,92 @@
+<div id="text" class="page-layout carded fullwidth ">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+            fxLayoutAlign.gt-xs="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-sm-0" fxLayout="row" style="margin-top: 10px;" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16">chat</mat-icon>
+                <span class="logo-text h1">Twitter Sentiment Analysis</span>
+            </div>
+            <!-- / APP TITLE -->
+        </div>
+        <div class="content-card" style="position: relative;" fusePerfectScrollbar>
+
+            <!-- CONTENT -->
+
+            <form name="form" [formGroup]="form" class="product w-100-p" fxLayout="column" fxFlex>
+
+                <div class="tab-content p-24" fusePerfectScrollbar>
+
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Enter Search Header To Check On Twitter</mat-label>
+                        <input matInput name="text" formControlName="text">
+                        <mat-error *ngIf="form.get('text').hasError('required')">
+                            Search Header is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100-p">
+                        <mat-label>Enter Count of tweets you want</mat-label>
+                        <input matInput name="count" formControlName="count">
+                        <mat-error *ngIf="form.get('count').hasError('required')">
+                            count is required
+                        </mat-error>
+                    </mat-form-field>
+                    <button mat-raised-button [disabled]="form.invalid" color="accent" (click)="analyseTweets()">Analyse
+                        Tweets</button>
+                    <mat-progress-bar *ngIf="loader" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
+                </div>
+            </form>
+            <div class="content" *ngIf="isResult">
+                <div style="display: block;">
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                        [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                    </canvas>
+                </div>
+
+                <table id="customers">
+                    <tr>
+                        <th>Text</th>
+                        <th>Polarity</th>
+                        <th>Sentiment</th>
+                    </tr>
+                    <tr *ngFor="let el of results">
+                        <td>{{el.text}}</td>
+                        <td>{{el.polarity}}</td>
+                        <td>{{el.sentiment}}</td>
+                    </tr>
+                </table>
+
+            </div>
+
+
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+        <!-- / CENTER -->
+
+    </div>
+
+    <!-- TOP BACKGROUND -->
+    <!--  -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <!-- <div class="center">-->
+    <div *ngIf="isResult" style="position: fixed;right: 20px;bottom:20px;z-index: 2000;">
+        <button style="margin-right: 10px; background-color:#092330" mat-fab
+            [@animate]="{value:'*', params:{delay:'300ms',scale:'.2'}}" (click)="downloadCSV()">
+            <mat-icon style="color: rgb(255, 255, 255)">get_app</mat-icon>
+        </button>
+    </div>
+</div>
